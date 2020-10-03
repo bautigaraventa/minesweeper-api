@@ -7,6 +7,104 @@ export class MineSweeperService {
 
     //#region Methods
 
+    /**
+     * Generates a new game and returns it
+     */
+    public startGame = (): any => {
+        try {
+            const newBoard = this.generateBoard();
+
+            return newBoard;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    /**
+     * Generates a new board
+     * @param rows number of rows in the board
+     * @param columns number of columns in the board
+     * @param mines number of mines in the board
+     */
+    private generateBoard = (rows: number = 10, columns: number = 10, mines: number = 10): number[][] => {
+        try {
+            const board: number[][] = this.initializeBoard(rows, columns);
+
+            const boardWithMines: number[][] = this.addMines(board, mines);
+
+            const filledBoard: number[][] = this.addHints(boardWithMines);
+
+            return filledBoard;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    /**
+     * Returns an empty board based on rows and columns
+     * @param rows number of rows for the board
+     * @param columns number of columns for the board
+     */
+    private initializeBoard = (rows: number, columns: number): number[][] => {
+        try {
+            const board: number[][] = [];
+            for (let r = 0; r < rows; r++) {
+                const newColumns = [];
+
+                for (let c = 0; c < columns; c++) {
+                    newColumns[c] = 0;
+                }
+
+                board[r] = newColumns;
+            }
+
+            return board;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    /**
+     * Generates random mines for a board
+     * @param board current board
+     * @param mines mines quantity to add
+     */
+    private addMines = (board: number[][], mines: number, ): number[][] => {
+        try {
+            const boardWithMines: number[][] = [...board];
+
+            for (let m = 0; m < mines; m++) {
+                let mineAlreadyExists = true;
+                while (mineAlreadyExists) {
+                    const mineRow = Math.floor(Math.random() * boardWithMines.length);
+                    const mineColumn = Math.floor(Math.random() * boardWithMines[0].length);
+                    if (boardWithMines[mineRow][mineColumn] !== -1) {
+                        boardWithMines[mineRow][mineColumn] = -1;
+                        mineAlreadyExists = false;
+                    }
+                }
+            }
+
+            return boardWithMines;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    /**
+     * Generates the numbers on each cell
+     * @param board current board
+     * @param mines mines quantity to add
+     */
+    private addHints = (board: number[][]): number[][] => {
+        try {
+            //TODO
+            return board;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     //#endregion
 
 }

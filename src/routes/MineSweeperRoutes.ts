@@ -11,6 +11,12 @@ class MineSweeperRoutes {
 
     private init(): void {
 
+        this.router.post(
+            `/start-game`,
+            // mineSweeperValidator.startGame,
+            mineSweeperController.startGame,
+        );
+
     }
 }
 
