@@ -12,9 +12,11 @@ export class MineSweeperService {
      */
     public startGame = (): any => {
         try {
-            const newBoard = this.generateBoard();
+            const newBoard: number[][] = this.generateBoard();
 
-            return newBoard;
+            return {
+                board: newBoard,
+            };
         } catch (error) {
             throw error;
         }
@@ -30,9 +32,9 @@ export class MineSweeperService {
         try {
             const board: number[][] = this.initializeBoard(rows, columns);
 
-            const boardWithMines: number[][] = this.addMines(board, mines);
+            const { boardWithMines, addedMines } = this.addMines(board, mines);
 
-            const filledBoard: number[][] = this.addHints(boardWithMines);
+            const filledBoard: number[][] = this.addHints(boardWithMines, addedMines);
 
             return filledBoard;
         } catch (error) {
@@ -69,9 +71,10 @@ export class MineSweeperService {
      * @param board current board
      * @param mines mines quantity to add
      */
-    private addMines = (board: number[][], mines: number, ): number[][] => {
+    private addMines = (board: number[][], mines: number): { boardWithMines: number[][], addedMines: number[][] } => {
         try {
             const boardWithMines: number[][] = [...board];
+            const addedMines: number[][] = [];
 
             for (let m = 0; m < mines; m++) {
                 let mineAlreadyExists = true;
@@ -80,12 +83,16 @@ export class MineSweeperService {
                     const mineColumn = Math.floor(Math.random() * boardWithMines[0].length);
                     if (boardWithMines[mineRow][mineColumn] !== -1) {
                         boardWithMines[mineRow][mineColumn] = -1;
+                        addedMines.push([mineRow, mineColumn]);
                         mineAlreadyExists = false;
                     }
                 }
             }
 
-            return boardWithMines;
+            return {
+                boardWithMines,
+                addedMines,
+            };
         } catch (error) {
             throw error;
         }
@@ -94,11 +101,33 @@ export class MineSweeperService {
     /**
      * Generates the numbers on each cell
      * @param board current board
-     * @param mines mines quantity to add
+     * @param minesPositions the positions of the mines
      */
-    private addHints = (board: number[][]): number[][] => {
+    private addHints = (board: number[][], minesPositions: number[][]): number[][] => {
         try {
-            //TODO
+            minesPositions.forEach(minePosition => {
+                const mineRow = minePosition[0];
+                const mineColumn = minePosition[1];
+
+                const aroundPositions = [
+                    { x: mineRow - 1, y: mineColumn - 1 },
+                    { x: mineRow - 1, y: mineColumn },
+                    { x: mineRow - 1, y: mineColumn + 1 },
+                    { x: mineRow, y: mineColumn - 1 },
+                    { x: mineRow, y: mineColumn + 1 },
+                    { x: mineRow + 1, y: mineColumn - 1 },
+                    { x: mineRow + 1, y: mineColumn },
+                    { x: mineRow + 1, y: mineColumn + 1 },
+                ]
+
+                aroundPositions.forEach(position => {
+                    const cell = board[position.x]?.[position.y];
+                    if (cell > -1) {
+                        board[position.x][position.y] = board[position.x][position.y] + 1;
+                    }
+                });
+            });
+
             return board;
         } catch (error) {
             throw error;
