@@ -13,9 +13,15 @@ export class MineSweeperService {
     public startGame = (): any => {
         try {
             const newBoard: number[][] = this.generateBoard();
+            const mines: number = 10;
+            const won: boolean = false;
+            const lost: boolean = false;
 
             return {
                 board: newBoard,
+                mines,
+                won,
+                lost
             };
         } catch (error) {
             throw error;
