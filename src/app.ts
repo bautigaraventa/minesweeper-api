@@ -2,6 +2,7 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import { mineSweeperRoutes } from "./routes/MineSweeperRoutes";
 import * as mongoose from 'mongoose';
+import * as cors from 'cors';
 
 class App {
     public app: express.Application;
@@ -15,6 +16,8 @@ class App {
         // Database
         mongoose.connect('mongodb://localhost:27017/minesweeper', { useNewUrlParser: true });
 
+        this.app.use(cors());
+        
         // support application/json
         this.app.use(bodyParser.json());
 

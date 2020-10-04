@@ -36,7 +36,9 @@ export class MineSweeperService {
 
             const filledBoard: number[][] = this.addHints(boardWithMines, addedMines);
 
-            return filledBoard;
+            const formattedBoard: any[] = this.formatBoard(filledBoard);
+
+            return formattedBoard;
         } catch (error) {
             throw error;
         }
@@ -129,6 +131,29 @@ export class MineSweeperService {
             });
 
             return board;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    /**
+     * Generates an object for each cell in the board
+     * @param board current board
+     */
+    private formatBoard = (board: number[][]): any[] => {
+        try {
+            const formattedBoard = board.map(b => {
+                return b.map(c => {
+                    return {
+                        value: c,
+                        isQuestioned: false,
+                        isFlagged: false,
+                        isRevealed: false,
+                    }
+                })
+            });
+
+            return formattedBoard;
         } catch (error) {
             throw error;
         }

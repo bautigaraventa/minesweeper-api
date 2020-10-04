@@ -15,8 +15,8 @@ export class MineSweeperController {
      */
     public startGame = async (req: Request, res: Response) => {
         try {
-            const newGame = mineSweeperService.startGame();
-            res.status(200).send({ newGame });
+            const game = mineSweeperService.startGame();
+            res.status(200).send({ game });
         } catch (error) {
             res.status(500).send({
                 error: error.message,
