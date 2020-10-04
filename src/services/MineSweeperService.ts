@@ -10,19 +10,79 @@ export class MineSweeperService {
     /**
      * Generates a new game and returns it
      */
-    public startGame = (): any => {
+    public startGame = async (rows: number, columns: number, mines: number, player: string): Promise<any> => {
         try {
-            const newBoard: number[][] = this.generateBoard();
-            const mines: number = 10;
-            const won: boolean = false;
-            const lost: boolean = false;
+            const newBoard: number[][] = this.generateBoard(rows, columns, mines);
 
-            return {
+            const game = {
                 board: newBoard,
                 mines,
-                won,
-                lost
-            };
+                won: false,
+                lost: false,
+                player,
+            }
+
+            await gameRepository.create(game);
+            console.log(game)
+            return game;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    /**
+     * Saves a finished game
+     */
+    public endGame = async (id: string, board: any[], won: boolean, lost: boolean): Promise<void> => {
+        try {
+            const update = {
+                $set: {
+                    board,
+                    won,
+                    lost,
+                }
+            }
+
+            await gameRepository.updateOne({ _id: id }, update);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    /**
+     * Updates the state of a game in progress
+     */
+    public pauseGame = async (id: string, board: any[]): Promise<void> => {
+        try {
+            const update = {
+                $set: {
+                    board,
+                }
+            }
+
+            await gameRepository.updateOne({ _id: id }, update);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    /**
+     * Returns a game in progress
+     */
+    public resumeGame = async (id: string): Promise<void> => {
+        try {
+            return gameRepository.findOne({ _id: id });
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    /**
+     * Returns all games in progress of a given player
+     */
+    public getByPlayer = async (player: string): Promise<void> => {
+        try {
+            return gameRepository.find({ player, won: false, lost: false });
         } catch (error) {
             throw error;
         }
