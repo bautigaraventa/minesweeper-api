@@ -13,21 +13,6 @@ export class MineSweeperController {
      * @param req 
      * @param res 
      */
-    public aa = async (req: Request, res: Response) => {
-        try {            
-            res.status(200).send({message: "claty"});
-        } catch (error) {
-            res.status(500).send({
-                error: error.message,
-            });
-        }
-    }
-
-    /**
-     * Generates a new game and returns it
-     * @param req 
-     * @param res 
-     */
     public startGame = async (req: Request, res: Response) => {
         try {
             const { rows, columns, mines, player } = req.body;
