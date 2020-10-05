@@ -51,7 +51,8 @@ It will be saved on the database.
                 mines: 20, 
                 won: false, 
                 lost: false, 
-                player: "bauti garaventa"
+                player: "bauti garaventa",
+                timer: 0,
             } } 
     - error: 
         - { status: 500, error }
@@ -67,12 +68,14 @@ This endpoint finishes a game by marking it as won or lost
         - board: {Object[][]} The game board,
         - won: {Boolean} True if game was won,
         - lost: {Boolean} True if game was lost,
+        - timer: {Number} Seconds of the game duration,
 
     - body example:
         {
             "board": [[{"value": 0, "isQuestioned": false, "isFlagged": false, "isRevealed": false}, ...]],
             "won": true,
             "lost": false,
+            "timer": 10
         }
 
 ### Output:
@@ -89,10 +92,12 @@ This endpoint pauses a game by persisting its state.
         - id: {String} The game identifier
     - body:
         - board: {Object[][]} The game board,
+        - timer: {Number} Seconds of the game duration,
 
     - body example:
         {
             "board": [[{"value": 0, "isQuestioned": false, "isFlagged": false, "isRevealed": false}, ...]],
+            "timer": 10
         }
 
 ### Output:

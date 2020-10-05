@@ -6,6 +6,7 @@ const gameSchema = new mongoose.Schema({
     won: { type: Boolean },
     lost: { type: Boolean },
     player: { type: String },
+    timer: { type: Number },
 });
 
 mongoose.model('Game', gameSchema);

@@ -20,6 +20,7 @@ export class MineSweeperService {
                 won: false,
                 lost: false,
                 player,
+                timer: 0,
             }
 
             const createdGame = await gameRepository.create(game);
@@ -33,13 +34,14 @@ export class MineSweeperService {
     /**
      * Saves a finished game
      */
-    public endGame = async (id: string, board: any[], won: boolean, lost: boolean): Promise<void> => {
+    public endGame = async (id: string, board: any[], won: boolean, lost: boolean, timer: number): Promise<void> => {
         try {
             const update = {
                 $set: {
                     board,
                     won,
                     lost,
+                    timer,
                 }
             }
 
@@ -52,11 +54,12 @@ export class MineSweeperService {
     /**
      * Updates the state of a game in progress
      */
-    public pauseGame = async (id: string, board: any[]): Promise<void> => {
+    public pauseGame = async (id: string, board: any[], timer: number): Promise<void> => {
         try {
             const update = {
                 $set: {
                     board,
+                    timer,
                 }
             }
 

@@ -32,8 +32,8 @@ export class MineSweeperController {
      */
     public endGame = async (req: Request, res: Response) => {
         try {
-            const { board, won, lost } = req.body;
-            await mineSweeperService.endGame(req.params.id, board, won, lost);
+            const { board, won, lost, timer } = req.body;
+            await mineSweeperService.endGame(req.params.id, board, won, lost, timer);
             res.status(200).send();
         } catch (error) {
             res.status(500).send({
@@ -49,7 +49,8 @@ export class MineSweeperController {
      */
     public pauseGame = async (req: Request, res: Response) => {
         try {
-            await mineSweeperService.pauseGame(req.params.id, req.body.board);
+            const { board, timer } = req.body;
+            await mineSweeperService.pauseGame(req.params.id, board, timer);
             res.status(200).send();
         } catch (error) {
             res.status(500).send({

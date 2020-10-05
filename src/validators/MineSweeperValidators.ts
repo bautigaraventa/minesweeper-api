@@ -20,8 +20,9 @@ export class MineSweeperValidator {
         }),
         body: Joi.object().keys({
             board: Joi.array().items(Joi.any().required()).required(),
-            won: Joi.boolean().required,
-            lost: Joi.boolean().required,
+            won: Joi.boolean().required(),
+            lost: Joi.boolean().required(),
+            timer: Joi.number().required(),
         }),
     });
 
@@ -31,6 +32,7 @@ export class MineSweeperValidator {
         }),
         body: Joi.object().keys({
             board: Joi.array().items(Joi.any().required()).required(),
+            timer: Joi.number().required(),
         }),
     });
 
