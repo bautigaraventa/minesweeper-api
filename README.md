@@ -16,6 +16,7 @@ It works with a NoSQL Database (MongoDB) by using mongoose library.
 
 # .env example
     - PORT=3000 => the port where our server will listen to requests
+    - MONGO_URL=mongodb://localhost:27017 => the database url
 
 # Tests
 As a testing library we use jest (https://jestjs.io/):
