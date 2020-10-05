@@ -14,7 +14,7 @@ class App {
 
     private config(): void {
         // Database
-        mongoose.connect(`${process.env.MONGO_URL}/minesweeper`, { useNewUrlParser: true });
+        mongoose.connect(`${process.env.MONGODB_URI}`, { useNewUrlParser: true });
 
         this.app.use(cors());
         

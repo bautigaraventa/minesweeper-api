@@ -5,6 +5,7 @@
         "pretty": true,
         "sourceMap": true,
         "target": "es6",
+        "allowJs": true,
         "lib": [
             "dom",
             "esnext"
@@ -14,6 +15,7 @@
         "alwaysStrict": true
     },
     "include": [
+        "src/**/*.js",
         "src/**/*.ts"
     ],
     "exclude": [
