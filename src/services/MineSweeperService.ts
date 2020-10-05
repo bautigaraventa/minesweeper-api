@@ -22,9 +22,9 @@ export class MineSweeperService {
                 player,
             }
 
-            await gameRepository.create(game);
-            console.log(game)
-            return game;
+            const createdGame = await gameRepository.create(game);
+
+            return createdGame;
         } catch (error) {
             throw error;
         }
@@ -69,7 +69,7 @@ export class MineSweeperService {
     /**
      * Returns a game in progress
      */
-    public resumeGame = async (id: string): Promise<void> => {
+    public resumeGame = async (id: string): Promise<any> => {
         try {
             return gameRepository.findOne({ _id: id });
         } catch (error) {
@@ -80,7 +80,7 @@ export class MineSweeperService {
     /**
      * Returns all games in progress of a given player
      */
-    public getByPlayer = async (player: string): Promise<void> => {
+    public getByPlayer = async (player: string): Promise<any[]> => {
         try {
             return gameRepository.find({ player, won: false, lost: false });
         } catch (error) {
